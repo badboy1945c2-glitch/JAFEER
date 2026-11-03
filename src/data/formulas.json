@@ -1,0 +1,26 @@
+[
+  {
+    "id": "beam-simple-moment",
+    "title": "العزم الأقصى في عتبة بسيطة الإسناد",
+    "category": "المنشآت",
+    "description": "حساب العزم الأقصى لعتبة محمّلة بحمل منتظم على كامل طولها.",
+    "inputs": [
+      { "key": "w", "label": "الحمل الموزع", "unit": "kN/m", "default": 10, "min": 0 },
+      { "key": "L", "label": "طول العتبة", "unit": "m", "default": 5, "min": 0 }
+    ],
+    "outputs": [
+      {
+        "key": "M",
+        "label": "العزم الأقصى",
+        "unit": "kN.m",
+        "expression": "w * L^2 / 8",
+        "latex": "M = \\frac{w L^2}{8}",
+        "decimals": 2
+      }
+    ],
+    "sourceIds": ["src-001"],
+    "notes": "يُفترض أن المادة خطية مرنة وأن الحمل منتظم.",
+    "createdBy": "system"
+  }
+]
+

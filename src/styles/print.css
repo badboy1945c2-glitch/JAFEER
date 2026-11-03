@@ -1,0 +1,82 @@
+/* ==========================================================================
+   print.css - تنسيقات الطباعة الهندسية وحفظ ملفات PDF النظيفة
+   ========================================================================== */
+
+@media print {
+  /* إخفاء العناصر غير الضرورية في المطبوعات */
+  .site-header,
+  .site-footer,
+  .mobile-drawer,
+  .mobile-drawer-backdrop,
+  .toast-container,
+  .modal-backdrop,
+  .scroll-progress-bar,
+  .btn,
+  .site-header-actions,
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background: #FFFFFF !important;
+    color: #000000 !important;
+    font-size: 11pt;
+    line-height: 1.5;
+  }
+
+  body::before {
+    display: none !important;
+  }
+
+  .container {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .card {
+    border: 1px solid #CCCCCC !important;
+    box-shadow: none !important;
+    page-break-inside: avoid;
+    margin-bottom: 20px;
+    padding: 16px !important;
+  }
+
+  .result-panel {
+    background-color: #F8F8F8 !important;
+    border: 2px solid #333333 !important;
+    border-right: 6px solid #6636CC !important;
+    box-shadow: none !important;
+    page-break-inside: avoid;
+  }
+
+  .result-value {
+    color: #000000 !important;
+    font-size: 2rem !important;
+  }
+
+  .form-input {
+    border: 1px solid #999999 !important;
+    background: #FFFFFF !important;
+    color: #000000 !important;
+  }
+
+  /* رأس صفحة الطباعة الرسمي */
+  .print-header {
+    display: block !important;
+    border-bottom: 2px solid #6636CC;
+    padding-bottom: 12px;
+    margin-bottom: 24px;
+  }
+
+  a {
+    color: #000000 !important;
+    text-decoration: none !important;
+  }
+
+  @page {
+    margin: 1.5cm;
+    size: A4 portrait;
+  }
+}
+

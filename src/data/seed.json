@@ -1,0 +1,186 @@
+{
+  "schemaVersion": 1,
+  "settings": {
+    "siteName": "المهندس الصغير",
+    "tagline": "حاسبات ومعادلات هندسية مرجعية",
+    "logoAssetId": null,
+    "faviconAssetId": null,
+    "heroBackgroundAssetIds": [],
+    "heroOverlayOpacity": 0.55,
+    "primaryColor": "#6636CC",
+    "animationsEnabled": true,
+    "footerText": "موقع «المهندس الصغير» - حاسبات ومعادلات هندسية مرجعية قابلة للتوسعة.",
+    "contactLinks": [],
+    "adminPinHash": ""
+  },
+  "categories": [
+    { "id": "cat-structures", "title": "المنشآت", "description": "تحليل الإجهادات والعزوم وقوى القص للعتبات والإطارات.", "coverAssetId": null, "order": 1 },
+    { "id": "cat-concrete", "title": "الخرسانة المسلحة", "description": "تسليح المقاطع وحسابات الأحجام والأوزان الذاتية.", "coverAssetId": null, "order": 2 },
+    { "id": "cat-soil", "title": "ميكانيكا التربة", "description": "قدرة تحمل التربة وإجهادات التماس وتصميم الأساسات.", "coverAssetId": null, "order": 3 },
+    { "id": "cat-survey", "title": "المساحة والطرق", "description": "حسابات المنحنيات الأفقية والرأسية والإحداثيات.", "coverAssetId": null, "order": 4 }
+  ],
+  "formulas": [
+    {
+      "id": "beam-simple-moment",
+      "title": "العزم الأقصى في عتبة بسيطة الإسناد",
+      "categoryId": "cat-structures",
+      "description": "حساب العزم الأقصى لعتبة محمّلة بحمل منتظم على كامل طولها.",
+      "coverAssetId": null,
+      "galleryAssetIds": [],
+      "inputs": [
+        { "key": "w", "label": "الحمل الموزع", "unit": "kN/m", "default": 10, "min": 0, "max": null, "hint": "الحمل الموزع بانتظام على طول العتبة" },
+        { "key": "L", "label": "طول العتبة", "unit": "m", "default": 5, "min": 0, "max": null, "hint": "المسافة بين ركيزتي العتبة" }
+      ],
+      "outputs": [
+        {
+          "key": "M",
+          "label": "العزم الأقصى",
+          "unit": "kN.m",
+          "expression": "w * L^2 / 8",
+          "latex": "M = \\frac{w L^2}{8}",
+          "decimals": 2
+        }
+      ],
+      "sourceIds": ["src-001"],
+      "tags": ["عزوم", "عتبات", "منشآت"],
+      "notes": "يُفترض أن مادة العتبة خطية مرنة وأن الركائز حرة الدوران.",
+      "status": "published",
+      "isSample": true,
+      "createdAt": "2026-10-30T10:00:00.000Z",
+      "updatedAt": "2026-10-30T10:00:00.000Z"
+    },
+    {
+      "id": "axial-stress",
+      "title": "الإجهاد العمودي المحوري",
+      "categoryId": "cat-structures",
+      "description": "حساب الإجهاد العمودي المؤثر على مقطع مستعرض تحت تأثير قوة محورية.",
+      "coverAssetId": null,
+      "galleryAssetIds": [],
+      "inputs": [
+        { "key": "P", "label": "القوة المحورية", "unit": "kN", "default": 150, "min": 0, "max": null, "hint": "القوة العمودية المؤثرة" },
+        { "key": "A", "label": "مساحة المقطع", "unit": "cm²", "default": 50, "min": 0.001, "max": null, "hint": "مساحة المقطع المستعرض" }
+      ],
+      "outputs": [
+        {
+          "key": "sigma",
+          "label": "الإجهاد العمودي",
+          "unit": "MPa",
+          "expression": "(P * 1000) / (A * 100)",
+          "latex": "\\sigma = \\frac{P}{A}",
+          "decimals": 2
+        }
+      ],
+      "sourceIds": ["src-001"],
+      "tags": ["إجهاد", "ميكانيكا المواد"],
+      "notes": "تمت مراعاة تحويل الوحدات: 1 kN = 1000 N و 1 cm² = 100 mm² للحصول على الناتج بوحدة MPa (N/mm²).",
+      "status": "published",
+      "isSample": true,
+      "createdAt": "2026-10-30T10:00:00.000Z",
+      "updatedAt": "2026-10-30T10:00:00.000Z"
+    },
+    {
+      "id": "slab-concrete-volume",
+      "title": "حجم ووزن الخرسانة لبلاطة سقف",
+      "categoryId": "cat-concrete",
+      "description": "حساب الحجم الهندسي للبلاطة والوزن الذاتي التقريبي باعتماد كثافة الخرسانة المسلحة.",
+      "coverAssetId": null,
+      "galleryAssetIds": [],
+      "inputs": [
+        { "key": "L", "label": "طول البلاطة", "unit": "m", "default": 6, "min": 0, "max": null, "hint": "البعد في الاتجاه الأول" },
+        { "key": "B", "label": "عرض البلاطة", "unit": "m", "default": 4, "min": 0, "max": null, "hint": "البعد في الاتجاه الثاني" },
+        { "key": "t", "label": "سماكة البلاطة", "unit": "m", "default": 0.2, "min": 0.05, "max": null, "hint": "سماكة الصب الخرساني" },
+        { "key": "density", "label": "كثافة الخرسانة", "unit": "kN/m³", "default": 25, "min": 15, "max": 35, "hint": "الكثافة الحجمية (المعتادة 25 kN/m³)" }
+      ],
+      "outputs": [
+        {
+          "key": "Area",
+          "label": "مساحة المسطح",
+          "unit": "m²",
+          "expression": "L * B",
+          "latex": "A = L \\times B",
+          "decimals": 2
+        },
+        {
+          "key": "Volume",
+          "label": "حجم الخرسانة",
+          "unit": "m³",
+          "expression": "Area * t",
+          "latex": "V = A \\times t",
+          "decimals": 2
+        },
+        {
+          "key": "Weight",
+          "label": "الوزن الإجمالي",
+          "unit": "kN",
+          "expression": "Volume * density",
+          "latex": "W = V \\times \\gamma",
+          "decimals": 2
+        }
+      ],
+      "sourceIds": [],
+      "tags": ["خرسانة", "كميات", "أوزان"],
+      "notes": "هذه المعادلة استرشادية لحساب الكميات والأوزان الذاتية.",
+      "status": "published",
+      "isSample": true,
+      "createdAt": "2026-10-30T10:00:00.000Z",
+      "updatedAt": "2026-10-30T10:00:00.000Z"
+    }
+  ],
+  "constants": [
+    {
+      "key": "g",
+      "label": "تسارع الجاذبية الأرضية",
+      "value": 9.81,
+      "unit": "m/s²",
+      "sourceId": null,
+      "description": "قيمة تسارع السقوط الحر القياسي على سطح الأرض"
+    }
+  ],
+  "tables": [
+    {
+      "id": "concrete_grades",
+      "title": "درجات الخرسانة المعيارية (Eurocode 2)",
+      "columns": [
+        { "key": "grade", "label": "الرتبة", "type": "text" },
+        { "key": "fc", "label": "مقاومة الانضغاط المميزة (fc)", "unit": "MPa", "type": "number" },
+        { "key": "fcm", "label": "متوسط المقاومة (fcm)", "unit": "MPa", "type": "number" },
+        { "key": "Ecm", "label": "معامل المرونة (Ecm)", "unit": "GPa", "type": "number" }
+      ],
+      "rows": [
+        { "grade": "C20/25", "fc": 20, "fcm": 28, "Ecm": 30 },
+        { "grade": "C25/30", "fc": 25, "fcm": 33, "Ecm": 31 },
+        { "grade": "C30/37", "fc": 30, "fcm": 38, "Ecm": 33 },
+        { "grade": "C35/45", "fc": 35, "fcm": 43, "Ecm": 34 }
+      ],
+      "sourceId": null
+    }
+  ],
+  "sources": [
+    {
+      "id": "src-001",
+      "title": "ميكانيكا المواد (Mechanics of Materials)",
+      "author": "Russell C. Hibbeler",
+      "edition": "الطبعة العاشرة (10th Edition)",
+      "pages": "الفصل 6: الانحناء والعزوم، الفصل 1: الإجهادات المحورية",
+      "link": "",
+      "coverAssetId": null
+    }
+  ],
+  "homeSections": [
+    { "id": "sec-hero", "type": "hero", "enabled": true, "order": 1, "title": "حاسبات ومعادلات هندسية مرجعية" },
+    { "id": "sec-stats", "type": "stats", "enabled": true, "order": 2, "title": "الإحصائيات" },
+        {
+      "id": "sec-modules",
+      "type": "modules",
+      "enabled": true,
+      "order": 2.5,
+      "title": "وحدات متخصصة"
+    },
+    
+    { "id": "sec-categories", "type": "categories", "enabled": true, "order": 3, "title": "التصنيفات الهندسية" },
+    { "id": "sec-latest", "type": "latest-formulas", "enabled": true, "order": 4, "title": "أحدث المعادلات المضافة" },
+    { "id": "sec-gallery", "type": "gallery", "enabled": true, "order": 5, "title": "معرض المخططات والرسومات الهندسية" },
+    { "id": "sec-about", "type": "about", "enabled": true, "order": 6, "title": "عن موقع المهندس الصغير" }
+  ]
+}
+
