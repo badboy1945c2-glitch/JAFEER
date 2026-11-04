@@ -255,9 +255,59 @@ export function renderHomePage({ navigate }) {
     return renderer ? renderer(sec) : '';
   }).join('');
 
-  // إدراج بطاقات الوحدات (عناصر DOM جاهزة)
+  // إدراج بطاقات الوحدات المتخصصة (ميكانيك التربة + التحليل الإنشائي) واحدة تحت الأخرى
   container.querySelectorAll('[data-modules-slot]').forEach((slot) => {
+    slot.style.display = 'grid';
+    slot.style.gridTemplateColumns = '1fr'; // بطاقة تحت بطاقة بشكل عمودي
+    slot.style.gap = '20px';
+    
+    // 1. بطاقة ميكانيك التربة الأصلية
     slot.appendChild(renderSoilHomeCard());
+    
+    // 2. بطاقة Structural Analysis الجديدة تحتها مباشرة
+    const structCard = document.createElement('div');
+    structCard.className = 'card card-interactive';
+    structCard.style.cssText = 'padding: 24px; border-right: 5px solid #1F5FCC; display: flex; flex-direction: column; justify-content: space-between;';
+    structCard.innerHTML = `
+      <div>
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+          <span class="badge badge-category" style="background: #DCE8FD; color: #133B80;">Engineering Module</span>
+          <span class="badge badge-published">نشط</span>
+        </div>
+        
+        <!-- رسم هندسي مصغر يوضح بيم وأحمال وقوى -->
+        <div style="background: var(--bg-soft); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 12px; margin-bottom: 16px; text-align: center;">
+          <svg width="100%" height="85" viewBox="0 0 300 85" xmlns="http://www.w3.org/2000/svg">
+            <line x1="30" y1="50" x2="270" y2="50" stroke="var(--violet-800)" stroke-width="3" />
+            <polygon points="30,50 20,65 40,65" fill="var(--violet-600)" />
+            <circle cx="270" cy="58" r="5" fill="none" stroke="var(--violet-600)" stroke-width="2" />
+            <line x1="258" y1="64" x2="282" y2="64" stroke="var(--violet-600)" stroke-width="2" />
+            <line x1="150" y1="12" x2="150" y2="45" stroke="#D44862" stroke-width="2.5" />
+            <polygon points="150,48 145,40 155,40" fill="#D44862" />
+            <text x="158" y="25" font-size="12" fill="#D44862" font-family="monospace" font-weight="bold">P</text>
+            <line x1="50" y1="25" x2="50" y2="45" stroke="var(--violet-500)" stroke-width="1.5" />
+            <line x1="70" y1="25" x2="70" y2="45" stroke="var(--violet-500)" stroke-width="1.5" />
+            <line x1="90" y1="25" x2="90" y2="45" stroke="var(--violet-500)" stroke-width="1.5" />
+            <path d="M 45 25 Q 70 15 95 25" fill="none" stroke="var(--violet-500)" stroke-width="1.5" stroke-dasharray="2 2" />
+          </svg>
+        </div>
+
+        <h3 class="card-title" style="font-size: 1.25rem; margin-bottom: 8px; direction: ltr; text-align: right;">Structural Analysis</h3>
+        <p class="card-desc" style="font-size: 0.9rem; margin-bottom: 16px;">
+          إدخال وتصميم الهياكل، حساب ردود الأفعال، ورسم مخططات قوى القص وعزم الانحناء (SFD & BMD).
+        </p>
+      </div>
+      <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--line); padding-top: 14px; margin-top: auto;">
+        <span style="font-size: 0.85rem; color: #1F5FCC; font-weight: 500;">فتح الوحدة التفاعلية ←</span>
+        <span class="badge badge-sample">قيد التطوير</span>
+      </div>
+    `;
+    
+    structCard.addEventListener('click', () => {
+      window.location.hash = '#/structures';
+    });
+    
+    slot.appendChild(structCard);
   });
 
   // ربط البحث السريع
