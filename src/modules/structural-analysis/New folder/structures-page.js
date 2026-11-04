@@ -98,20 +98,7 @@ export function renderStructuresPage({ query = {} } = {}) {
   const container = document.createElement('div');
   container.className = 'container page-container';
   container.style.padding = '40px 20px 100px';
- container.style.maxWidth = '1250px';
-
-  // نفس شكل اللابتوب على الموبايل: عرض ثابت ثم تصغير حسب عرض الشاشة
-  const DESKTOP_W = 1280;
-  container.style.width = DESKTOP_W + 'px';
-  container.style.maxWidth = 'none';
-  container.style.marginInline = 'auto';
-
-  function fitToScreen() {
-    const vw = document.documentElement.clientWidth;
-    container.style.zoom = vw < DESKTOP_W ? String(vw / DESKTOP_W) : '1';
-  }
-  fitToScreen();
-  window.addEventListener('resize', fitToScreen);
+  container.style.maxWidth = '1250px';
   container.style.minWidth = '1250px';
 
   // على الموبايل: اعرض الصفحة بعرض اللابتوب، ويقدر المستخدم يكبّر بإصبعين
@@ -619,8 +606,36 @@ export function renderStructuresPage({ query = {} } = {}) {
   }
 
   draw();
+
+  // نفس شكل اللابتوب على الموبايل: عرض ثابت ثم تصغير بالـ transform
+  const DESKTOP_W = 1280;
+  const wrapper = document.createElement('div');
+  wrapper.style.cssText = 'width:100%; overflow:hidden; position:relative;';
+
+  container.style.setProperty('width', DESKTOP_W + 'px', 'important');
+  container.style.setProperty('min-width', DESKTOP_W + 'px', 'important');
+  container.style.setProperty('max-width', 'none', 'important');
+  container.style.setProperty('margin', '0', 'important');
+  container.style.transformOrigin = 'top right';
+  wrapper.appendChild(container);
+
+  function fit() {
+    const vw = document.documentElement.clientWidth;
+    const s = Math.min(1, vw / DESKTOP_W);
+    container.style.transform = s < 1 ? scale(${s}) : '';
+    wrapper.style.height = s < 1 ? Math.ceil(container.offsetHeight * s) + 'px' : 'auto';
+  }
+
+  const ro = new ResizeObserver(fit);
+  ro.observe(container);
+  window.addEventListener('resize', fit);
+  requestAnimationFrame(fit);
+
   return {
-    element: container,
-    cleanup: () => window.removeEventListener('resize', fitToScreen)
+    element: wrapper,
+    cleanup: () => {
+      ro.disconnect();
+      window.removeEventListener('resize', fit);
+    }
   };
 }
