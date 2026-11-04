@@ -98,7 +98,20 @@ export function renderStructuresPage({ query = {} } = {}) {
   const container = document.createElement('div');
   container.className = 'container page-container';
   container.style.padding = '40px 20px 100px';
-  container.style.maxWidth = '1250px';
+ container.style.maxWidth = '1250px';
+
+  // نفس شكل اللابتوب على الموبايل: عرض ثابت ثم تصغير حسب عرض الشاشة
+  const DESKTOP_W = 1280;
+  container.style.width = DESKTOP_W + 'px';
+  container.style.maxWidth = 'none';
+  container.style.marginInline = 'auto';
+
+  function fitToScreen() {
+    const vw = document.documentElement.clientWidth;
+    container.style.zoom = vw < DESKTOP_W ? String(vw / DESKTOP_W) : '1';
+  }
+  fitToScreen();
+  window.addEventListener('resize', fitToScreen);
   container.style.minWidth = '1250px';
 
   // على الموبايل: اعرض الصفحة بعرض اللابتوب، ويقدر المستخدم يكبّر بإصبعين
@@ -606,5 +619,8 @@ export function renderStructuresPage({ query = {} } = {}) {
   }
 
   draw();
-  return container;
+  return {
+    element: container,
+    cleanup: () => window.removeEventListener('resize', fitToScreen)
+  };
 }
