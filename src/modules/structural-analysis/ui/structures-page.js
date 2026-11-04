@@ -99,14 +99,6 @@ export function renderStructuresPage({ query = {} } = {}) {
   container.className = 'container page-container';
   container.style.padding = '40px 20px 100px';
   container.style.maxWidth = '1250px';
-  container.style.minWidth = '1250px';
-
-  // على الموبايل: اعرض الصفحة بعرض اللابتوب، ويقدر المستخدم يكبّر بإصبعين
-  const viewportMeta = document.querySelector('meta[name="viewport"]');
-  const originalViewport = viewportMeta ? viewportMeta.getAttribute('content') : null;
-  if (viewportMeta) {
-    viewportMeta.setAttribute('content', 'width=1300, user-scalable=yes, minimum-scale=0.1, maximum-scale=5');
-  }
 
   let activeTab = query.tab || 'calc';
   let beamState = JSON.parse(JSON.stringify(LECTURE_PRESETS[0].beam));
@@ -607,27 +599,26 @@ export function renderStructuresPage({ query = {} } = {}) {
 
   draw();
 
-  // نفس شكل اللابتوب على الموبايل: عرض ثابت ثم تصغير بالـ transform
+  // نفس شكل اللابتوب على الموبايل: عرض ثابت 1280 ثم تصغير حسب عرض الشاشة
   const DESKTOP_W = 1280;
+
   const wrapper = document.createElement('div');
   wrapper.style.cssText = 'width:100%; overflow:hidden; position:relative;';
 
-  container.style.setProperty('width', DESKTOP_W + 'px', 'important');
-  container.style.setProperty('min-width', DESKTOP_W + 'px', 'important');
-  container.style.setProperty('max-width', 'none', 'important');
-  container.style.setProperty('margin', '0', 'important');
-  container.style.transformOrigin = 'top right';
-  wrapper.appendChild(container);
+  const scaler = document.createElement('div');
+  scaler.style.cssText = 'width:' + DESKTOP_W + 'px; margin:0 auto; transform-origin: top right;';
+  scaler.appendChild(container);
+  wrapper.appendChild(scaler);
 
   function fit() {
     const vw = document.documentElement.clientWidth;
     const s = Math.min(1, vw / DESKTOP_W);
-    container.style.transform = s < 1 ? scale(${s}) : '';
-    wrapper.style.height = s < 1 ? Math.ceil(container.offsetHeight * s) + 'px' : 'auto';
+    scaler.style.transform = s < 1 ? 'scale(' + s + ')' : '';
+    wrapper.style.height = s < 1 ? Math.ceil(scaler.offsetHeight * s) + 'px' : 'auto';
   }
 
   const ro = new ResizeObserver(fit);
-  ro.observe(container);
+  ro.observe(scaler);
   window.addEventListener('resize', fit);
   requestAnimationFrame(fit);
 
