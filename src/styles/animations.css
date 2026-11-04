@@ -46,20 +46,23 @@
 }
 
 /* --------------------------------------------------------------------------
-   3. انتقال الصفحات (Page Fade Transition)
+   3. انتقال الصفحات الهندسي الاحترافي (Engineering Page Animation)
    -------------------------------------------------------------------------- */
 .page-container {
-  animation: pageFadeIn 160ms cubic-bezier(.2, .7, .2, 1) forwards;
+  animation: engineeringPageIn 500ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transform-origin: top center;
 }
 
-@keyframes pageFadeIn {
-  from {
+@keyframes engineeringPageIn {
+  0% {
     opacity: 0;
-    transform: translateY(4px);
+    transform: translateY(16px) scale(0.98);
+    filter: blur(2px);
   }
-  to {
+  100% {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
+    filter: blur(0);
   }
 }
 
@@ -176,4 +179,3 @@ body.animations-disabled .img-fade-in {
   animation: none !important;
   stroke-dashoffset: 0 !important;
 }
-

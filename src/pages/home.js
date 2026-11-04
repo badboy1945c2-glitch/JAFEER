@@ -1,12 +1,5 @@
 /**
  * home.js - الصفحة الرئيسية المبنية ديناميكياً من إعدادات وأقسام الموقع (Home Sections)
- * 
- * المزايا:
- * - بناء كل قسم ديناميكياً وفق إعدادات StorageAdapter.getHomeSections()
- * - دعم تغيير ترتيب أو إخفاء أي قسم فورياً
- * - خلفية الهيرو التفاعلية مع البارالاكس
- * - معرض المخططات والرسومات الهندسية الأصيلة (SVG Gallery) مع نافذة تكبير
- * - عدادات الإحصائيات الحية
  */
 
 import { renderLogo } from '../components/logo.js';
@@ -25,7 +18,7 @@ export function renderHomePage({ navigate }) {
   container.className = 'container page-container';
   container.style.padding = '40px 20px 100px';
 
-    // يضمن وجود قسم «الوحدات» لمن حُفظت أقسام رئيسيته قبل إضافته
+  // يضمن وجود قسم «الوحدات» لمن حُفظت أقسام رئيسيته قبل إضافته
   const storedSections = StorageAdapter.getHomeSections();
   if (storedSections.length && !storedSections.some((s) => s.type === 'modules')) {
     const anchor = storedSections.find((s) => s.type === 'stats') || storedSections.find((s) => s.type === 'hero');
@@ -34,6 +27,7 @@ export function renderHomePage({ navigate }) {
       { id: 'sec-modules', type: 'modules', enabled: true, order: (anchor ? anchor.order : 0) + 0.5, title: 'وحدات متخصصة' }
     ]);
   }
+
   // جلب البيانات من المخزن
   const homeSections = StorageAdapter.getHomeSections()
     .filter(sec => sec.enabled !== false)
@@ -51,10 +45,11 @@ export function renderHomePage({ navigate }) {
     // 1. قسم الهيرو الرئيسي
     'hero': (sec) => `
       <section class="hero-section" id="main-hero" style="position: relative; overflow: hidden; border-radius: var(--radius-lg); border: 1px solid var(--line); padding: 50px 24px; margin-bottom: 50px; background-color: var(--bg-soft); text-align: center;">
-                ${settings.heroBackgroundAssetIds && settings.heroBackgroundAssetIds[0] ? `
+        ${settings.heroBackgroundAssetIds && settings.heroBackgroundAssetIds[0] ? `
           <img data-asset-id="${settings.heroBackgroundAssetIds[0]}" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;" />
           <div style="position:absolute; inset:0; background:rgba(245,241,254,${settings.heroOverlayOpacity ?? 0.55});"></div>` : ''}
-      <div class="hero-blueprint-bg">
+        
+        <div class="hero-blueprint-bg">
           <svg class="hero-grid-svg" viewBox="0 0 1000 400" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <pattern id="main-hero-grid" width="40" height="40" patternUnits="userSpaceOnUse">
@@ -105,37 +100,8 @@ export function renderHomePage({ navigate }) {
       </section>
     `,
 
-    // 2. قسم الإحصائيات
-    'stats': (sec) => `
-      <section class="reveal" style="margin-bottom: 50px;">
-        <div style="margin-bottom: 16px;">
-          ${createDimensionLineSvg(sec.title || 'الإحصائيات السريعة للنظام', 320)}
-        </div>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
-          <div class="card" style="text-align: center; padding: 22px;">
-            <div style="font-size: 2.3rem; font-weight: 700; font-family: var(--font-mono); color: var(--violet-700);" 
-                 data-countup="${formulas.length}" data-duration="900">${formulas.length}</div>
-            <div style="font-size: 0.88rem; color: var(--ink-soft); margin-top: 4px;">معادلة هندسية</div>
-          </div>
-          <div class="card" style="text-align: center; padding: 22px;">
-            <div style="font-size: 2.3rem; font-weight: 700; font-family: var(--font-mono); color: var(--violet-700);" 
-                 data-countup="${sources.length}" data-duration="900">${sources.length}</div>
-            <div style="font-size: 0.88rem; color: var(--ink-soft); margin-top: 4px;">مرجعاً وكوداً معتمداً</div>
-          </div>
-          <div class="card" style="text-align: center; padding: 22px;">
-            <div style="font-size: 2.3rem; font-weight: 700; font-family: var(--font-mono); color: var(--violet-700);" 
-                 data-countup="${tables.length + constants.length}" data-duration="1000">${tables.length + constants.length}</div>
-            <div style="font-size: 0.88rem; color: var(--ink-soft); margin-top: 4px;">ثوابت وجداول مرجعية</div>
-          </div>
-          <div class="card" style="text-align: center; padding: 22px;">
-            <div style="font-size: 2.3rem; font-weight: 700; font-family: var(--font-mono); color: var(--violet-700);" 
-                 data-countup="${categories.length}" data-duration="800">${categories.length}</div>
-            <div style="font-size: 0.88rem; color: var(--ink-soft); margin-top: 4px;">تصنيفات معتمدة</div>
-          </div>
-        </div>
-      </section>
-    `,
-    // قسم الوحدات المتخصصة (بطاقة ميكانيك التربة)
+
+    // قسم الوحدات المتخصصة
     'modules': (sec) => `
       <section class="reveal" style="margin-bottom: 50px;">
         <div style="margin-bottom: 16px;">
@@ -144,6 +110,7 @@ export function renderHomePage({ navigate }) {
         <div data-modules-slot></div>
       </section>
     `,
+
     // 3. قسم التصنيفات الهندسية
     'categories': (sec) => `
       <section class="reveal" style="margin-bottom: 50px;">
@@ -194,7 +161,7 @@ export function renderHomePage({ navigate }) {
       </section>
     `,
 
-    // 5. معرض المخططات والرسومات الهندسية الأصيلة (SVG Gallery)
+    // 5. معرض المخططات
     'gallery': (sec) => `
       <section class="reveal" style="margin-bottom: 50px;">
         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 10px;">
@@ -202,7 +169,6 @@ export function renderHomePage({ navigate }) {
           <span style="font-size: 0.82rem; color: var(--ink-muted);">انقر على المخطط للتكبير والفحص</span>
         </div>
         <div class="stagger-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
-          <!-- مخطط 1: العتبة والعزوم -->
           <div class="card card-interactive reveal-item btn-zoom-diagram" data-diagram="beam" style="padding: 16px;">
             <div style="border-radius: var(--radius-sm); overflow: hidden; margin-bottom: 12px; background: #fff;">
               ${renderBeamMomentDiagramSvg()}
@@ -211,7 +177,6 @@ export function renderHomePage({ navigate }) {
             <div style="font-size: 0.82rem; color: var(--ink-soft);">توزيع الحمل المنتظم وقيمة العزم الأقصى في المنتصف wL²/8.</div>
           </div>
 
-          <!-- مخطط 2: مقطع الخرسانة المسلحة -->
           <div class="card card-interactive reveal-item btn-zoom-diagram" data-diagram="concrete" style="padding: 16px;">
             <div style="border-radius: var(--radius-sm); overflow: hidden; margin-bottom: 12px; background: #fff;">
               ${renderConcreteSectionDiagramSvg()}
@@ -220,7 +185,6 @@ export function renderHomePage({ navigate }) {
             <div style="font-size: 0.82rem; color: var(--ink-soft);">تفاصيل كانات القص وتسليح الشد السفلي والتعليق العلوي.</div>
           </div>
 
-          <!-- مخطط 3: ضغط التربة الجدار الاستنادي -->
           <div class="card card-interactive reveal-item btn-zoom-diagram" data-diagram="soil" style="padding: 16px;">
             <div style="border-radius: var(--radius-sm); overflow: hidden; margin-bottom: 12px; background: #fff;">
               ${renderSoilPressureDiagramSvg()}
@@ -295,6 +259,7 @@ export function renderHomePage({ navigate }) {
   container.querySelectorAll('[data-modules-slot]').forEach((slot) => {
     slot.appendChild(renderSoilHomeCard());
   });
+
   // ربط البحث السريع
   const searchForm = container.querySelector('#hero-search-form');
   if (searchForm) {
