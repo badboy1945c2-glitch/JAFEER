@@ -18,14 +18,20 @@ import { createFooter } from './components/footer.js';
 
 import { renderHomePage } from './pages/home.js';
 import { renderLibraryPage } from './pages/library.js';
+import { renderCalculatorPage } from './pages/calculator.js';
+import { renderCategoryPage } from './pages/category.js';
 import { renderTablesPage } from './pages/tables.js';
 import { renderSourcesPage } from './pages/sources.js';
 import { renderAboutPage } from './pages/about.js';
+import { renderDesignPage } from './pages/design.js';
 import { renderNotFoundPage } from './pages/not-found.js';
+import { renderAdminDashboard } from './admin/dashboard.js';
+import { renderSoilPage } from './modules/soil-mechanics/ui/soil-page.js';
+import { renderConcretePage } from './modules/concrete/ui/concrete-page.js';
+import { renderStructuresPage } from './modules/structural-analysis/ui/structures-page.js';
 import { applySiteSettings, watchAssetImages } from './site-settings.js';
 import seedData from './data/seed.json';
 import { applyModules } from './store/backup-sections.js';
-import { renderStructuresPage } from './modules/structural-analysis/ui/structures-page.js';
 
 const app = document.querySelector('#app');
 
@@ -78,14 +84,18 @@ async function bootstrap() {
     routes: {
       '/': renderHomePage,
       '/library': renderLibraryPage,
+      '/calc/:id': renderCalculatorPage,
+      '/category/:id': renderCategoryPage,
       '/tables': renderTablesPage,
       '/sources': renderSourcesPage,
+      '/soil': renderSoilPage,
+      '/concrete': renderConcretePage,
+      '/structures': renderStructuresPage,
       '/about': renderAboutPage,
-      '/structures': async (ctx) => {
-        return renderStructuresPage(ctx);
-      }
+      '/design': renderDesignPage,
+      '/admin': renderAdminDashboard
     },
-    notFound: renderNotFoundPage
+    notFoundView: renderNotFoundPage
   });
 }
 
