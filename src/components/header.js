@@ -21,6 +21,7 @@ export function createHeader() {
         <a href="#/tables" class="nav-link" data-route="/tables">الجداول المرجعية</a>
         <a href="#/sources" class="nav-link" data-route="/sources">المصادر</a>
         <a href="#/soil" class="nav-link" data-route="/soil">ميكانيك التربة</a>
+        <a href="#/concrete" class="nav-link" data-route="/concrete">الكونكريت</a>
         <a href="#/about" class="nav-link" data-route="/about">عن الموقع</a>
       </nav>
 
@@ -58,6 +59,7 @@ export function createHeader() {
         <a href="#/tables" class="mobile-nav-link" data-route="/tables">الجداول المرجعية</a>
         <a href="#/sources" class="mobile-nav-link" data-route="/sources">المصادر والأكواد</a>
         <a href="#/soil" class="mobile-nav-link" data-route="/soil">ميكانيك التربة</a>
+                <a href="#/concrete" class="mobile-nav-link" data-route="/concrete">الكونكريت</a>
         <a href="#/about" class="mobile-nav-link" data-route="/about">عن المهندس الصغير</a>
         <div style="border-top: 1px solid var(--line); margin: 12px 0;"></div>
         <a href="#/admin" class="mobile-nav-link" data-route="/admin" style="color: var(--violet-700); font-weight: 600;">

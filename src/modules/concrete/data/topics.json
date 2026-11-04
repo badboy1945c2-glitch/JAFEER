@@ -1,0 +1,13 @@
+[
+  { "id": "properties", "n": 1, "title": "Introduction + Lecture 1", "sub": "Properties of Concrete and Reinforcing Steel", "status": "ready" },
+  { "id": "design-methods", "n": 2, "title": "Lecture 2", "sub": "Design Methods and Requirements", "status": "ready" },
+  { "id": "beam-behavior", "n": 3, "title": "Lecture 3", "sub": "Behavior of Reinforced Concrete Beam under Load", "status": "ready" },
+  { "id": "wsd", "n": 4, "title": "Working Stress Design Method", "sub": "Sections, alternative method, and solved examples", "status": "ready" },
+  { "id": "singly-analysis", "n": 5, "title": "Flexural Analysis of Singly Reinforced Beams", "status": "soon" },
+  { "id": "singly-design", "n": 6, "title": "Flexural Design of Singly Reinforced Beams", "status": "soon" },
+  { "id": "doubly-analysis", "n": 7, "title": "Flexural Analysis of Doubly Reinforced Beams", "status": "soon" },
+  { "id": "doubly-design", "n": 8, "title": "Flexural Design of Doubly Reinforced Beams", "status": "soon" },
+  { "id": "continuous-approx", "n": 9, "title": "Approximate Analysis of Continuous Beams", "status": "soon" },
+  { "id": "tl-analysis", "n": 10, "title": "Flexural Analysis of T and L Sections", "status": "soon" },
+  { "id": "tl-design", "n": 11, "title": "Flexural Design of T and L Sections", "status": "soon" }
+]

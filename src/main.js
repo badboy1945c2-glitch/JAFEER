@@ -87,6 +87,10 @@ async function bootstrap() {
         const { renderSoilPage } = await import('./modules/soil-mechanics/ui/soil-page.js');
         return renderSoilPage(ctx);
       },
+            '/concrete': async (ctx) => {
+        const { renderConcretePage } = await import('./modules/concrete/ui/concrete-page.js');
+        return renderConcretePage(ctx);
+      },
       '/about': renderAboutPage,
       '/design': async (ctx) => {
         const { renderDesignPage } = await import('./pages/design.js');
