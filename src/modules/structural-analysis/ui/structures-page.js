@@ -99,6 +99,14 @@ export function renderStructuresPage({ query = {} } = {}) {
   container.className = 'container page-container';
   container.style.padding = '40px 20px 100px';
   container.style.maxWidth = '1250px';
+  container.style.minWidth = '1250px';
+
+  // على الموبايل: اعرض الصفحة بعرض اللابتوب، ويقدر المستخدم يكبّر بإصبعين
+  const viewportMeta = document.querySelector('meta[name="viewport"]');
+  const originalViewport = viewportMeta ? viewportMeta.getAttribute('content') : null;
+  if (viewportMeta) {
+    viewportMeta.setAttribute('content', 'width=1300, user-scalable=yes, minimum-scale=0.1, maximum-scale=5');
+  }
 
   let activeTab = query.tab || 'calc';
   let beamState = JSON.parse(JSON.stringify(LECTURE_PRESETS[0].beam));
